@@ -117,7 +117,7 @@ int main ()
     cout << setw(28)<<"------"<<endl;
     cout <<"Airfare"<<setw(20)<<airfareFee<<endl;
     cout <<"Car Rental"<<setw(17)<<carRentalFee<<endl;
-    cout <<"Taxi"<<setw(23)<<taxiFee<<endl;
+    cout <<"Taxi"<<setw(23)<<taxiSpent<<endl;
     cout <<"Registration"<<setw(15)<<registrationFee<<endl;
     cout <<"Hotel"<<setw(22)<<hotelFeeTotal<<endl;
     cout <<"Meal"<<setw(23)<<spentMealTotal<<endl;
@@ -362,9 +362,3 @@ double getMealAmount(double spentMealTotal)
   
     spentMealTotal= breakfastFee +lunchFee +dinnerFee;  
 }
-
-
-
-
-
-
