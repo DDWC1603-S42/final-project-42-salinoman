@@ -1,52 +1,59 @@
+#include <utility>
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 
-int getDays(int);
-int getTime (double&, double&);
-double getAirfareAmount(double);
-double getCarRentalAmount (double);
-int getTaxiAmount(double&,double&);
-double getRegistrationFee(double);
-int getHotelAmount(double&,double&);
-double getMealAmount (double);
 
-int main ()
+/* Prototypes: Number of days, */
+int numDays(int);
+string name;
+double getDepartureTime(double);
+double getArrivalTime(double);
+double getRoundTripFares(double);
+double getCarRentalCost(double);
+double getParkingFees(double);
+double getTaxiFees(double);
+double getRegistrationFees(double);
+double getHotelExpenses(double);
+
+double getAllowableMeals(double, double, double &, double &, double &,
+                         double &, double &, double &);
+
+void calcTotalCost(int, double, double, double, double, double, double,
+                        double, double, double, double, double,
+                        double, double, double, double parking = 6.0, double taxi = 13.0, 
+                        double hotel = 300.00, double breakfast = 10.0, 
+                        double lunch = 18.0, double dinner = 25.0);
+
+int main()
 {
-	int days;
-     double arrivalTime;
-    double departureTime;
-    double airfareFee;
-    double carRentalFee;
-    double vechileExpense;
-    double taxiFee;
-    double registrationFee;
-    double spentTotal;
-    double allowedTotal;
-    double companyTotal;
-    double mealTotal;
-    double total;
-    double allowedTaxiFee;
-    double hotelFee;
-    double nightlyRate;
-    double allowedHotelFee;
-    double hotelFeeTotal;
-    double allowedBreaksfastFee;
-    double allowedLunchFee;
-    double allowedDinnerFee;
-    double breaksfastFee;
-    double lunchFee;
-    double dinnerFee;
-    double allowedMealTotal;
-    string employeeName;
-    int d;
-     double taxiSpent;
-    double spentMealTotal;
-    
-    //Program Start
+   /* Variables: Days on trip */
+   static int daysOnTrip = 0;
+
+   
+   static double timeOfDeparture = 0.0,
+                 timeOfArrival = 0.0, 
+                 roundTripFares = 0.0,
+                 carRentalCost = 0.0,
+                 parkingFees = 0.0,
+                 taxiFees = 0.0,
+                 registrationFees = 0.0,
+                 hotelExpenses = 0.0,
+                 breakfastFirstDay = 0.0,
+                 lunchFirstDay = 0.0,
+                 dinnerFirstDay = 0.0,
+                 breakfastLastDay = 0.0,
+                 lunchLastDay = 0.0,
+                 dinnerLastDay = 0.0,
+                 allowableMeals = 0.0;
+
+   /* Display: Table header */
     cout << "CREATE BY :" << endl;
     cout << "MUHD EIMAN HAKIMY BIN SHAHRUM" << endl;
+    cout << "MUHAMMAD HAZIQ BIN AZLI" << endl;
+    cout << "AHMAD SALMAN NAIM BIN MOHD ATAN " << endl;
     
     cout <<"****************************************************" << endl;
     cout <<"*       ____________________________________       *" << endl;
@@ -57,308 +64,491 @@ int main ()
     cout <<"*       ____________________________________       *" << endl;
     cout <<"*                                                  *" << endl;
     cout <<"****************************************************" << endl;
-    
+    cout << endl;
+    cout << endl;
     cout << "Travel Expanses report" << endl;
     cout << "______________________" << endl;
     cout << endl;
     cout << endl;
-    cout << "(First Name)" << endl;
-    cout << "Enter Your Name :  " ;
-    cin >>employeeName;
-    cout<<endl;
-    
-	days = getDays(days);
-    d = static_cast<int>(days);
-    cout<<endl;
-    
-    getTime (departureTime,arrivalTime);
-    cout<<endl;
-    
     cout <<"**********"<<endl;
-    cout <<"* TRAVEL *"<<endl;
+    cout <<"*  NAME  *"<<endl;
     cout <<"**********"<<endl;
-    
-	airfareFee = getAirfareAmount(airfareFee);
-    carRentalFee = getCarRentalAmount(carRentalFee);
-    allowedTaxiFee = 10 * days;
-    getTaxiAmount (taxiSpent,allowedTaxiFee);
-    cout <<endl;
-    
-    cout <<"*********"<<endl;
-    cout <<"*  FEE  *"<<endl;
-    cout <<"*********"<<endl;
-    
-    registrationFee= getRegistrationFee(registrationFee);
-    hotelFeeTotal = days * nightlyRate;
-    allowedHotelFee = 90 * days;
-    getHotelAmount (hotelFeeTotal,allowedHotelFee);
-    cout<< endl;
-    
-    cout <<"**********"<<endl;
-    cout <<"*  MEAL  *"<<endl;
-    cout <<"**********"<<endl;
-    
-    
-    mealTotal= breaksfastFee +lunchFee +dinnerFee; 
-    getMealAmount (spentMealTotal);
-    cout<<endl;
-    
-     //calc total
-    spentTotal=airfareFee+carRentalFee+vechileExpense+taxiFee+registrationFee+hotelFee+mealTotal;
-    // DISPLAY TOTAL OF TRAVEL EXPANSES  
-    
-    cout << "TRAVEL EXPANSES FOR : " <<employeeName<<endl<<endl;
-    cout << " TOTAL DAYS OF TRIP : " <<days<<endl<<endl;
-    cout << fixed << setprecision(2);
-    cout << "Departure time: "<< departureTime<<setw(20)<<"Arrival time: " <<arrivalTime<<endl;
-    cout <<setw(8)<<setprecision(2)<<showpoint<<fixed;
+    string name;
+    cout <<"(FIRST NAME ONLY)" << endl;
+    cout <<"Enter Your Name : ";
+    cin>>name;
     cout << endl;
-    cout <<setw(25)<<"Spent"<<endl;
-    cout << setw(28)<<"------"<<endl;
-    cout <<"Airfare"<<setw(20)<<airfareFee<<endl;
-    cout <<"Car Rental"<<setw(17)<<carRentalFee<<endl;
-    cout <<"Taxi"<<setw(23)<<taxiSpent<<endl;
-    cout <<"Registration"<<setw(15)<<registrationFee<<endl;
-    cout <<"Hotel"<<setw(22)<<hotelFeeTotal<<endl;
-    cout <<"Meal"<<setw(23)<<spentMealTotal<<endl;
-    cout << setw(28)<<"--------"<<endl;
-    cout <<"TOTALS"<<setw(21)<<spentTotal<<endl;
-    cout <<endl<<endl;
-    
-    system ("pause");
-    return 0;
-}
 
-// function (int days )
-int getDays(int days)
-{
-    cout << "How many days were spent on the trip? : " ;
-    cin >> days;
+   /*Call*/
+   cout <<"**********"<<endl;
+   cout <<"* TRAVEL *"<<endl;
+   cout <<"**********"<<endl;
+   daysOnTrip = numDays(daysOnTrip);
+   timeOfDeparture = getDepartureTime(timeOfDeparture);
+   timeOfArrival = getArrivalTime(timeOfArrival);
+   cout << endl;
+   
+   cout <<"*********"<<endl;
+   cout <<"*  FEE  *"<<endl;
+   cout <<"*********"<<endl;
+   roundTripFares = getRoundTripFares(roundTripFares);
+   carRentalCost = getCarRentalCost(carRentalCost);
+   parkingFees = getParkingFees(parkingFees);
+   taxiFees = getTaxiFees(taxiFees);
+   registrationFees = getRegistrationFees(registrationFees);
+   hotelExpenses = getHotelExpenses(hotelExpenses);
+   cout << endl;
+   
+   cout <<"**********"<<endl;
+   cout <<"*  MEAL  *"<<endl;
+   cout <<"**********"<<endl;
+   allowableMeals = getAllowableMeals(timeOfDeparture, timeOfArrival,
+                                      breakfastFirstDay, lunchFirstDay,
+                                      dinnerFirstDay, breakfastLastDay,
+                                      lunchLastDay, dinnerLastDay);
     cout << endl;
-              
-    while (days < 1)
-    {
-    cout << "Please enter a number more than 1 : " ;
-    cin >> days;
-    cout << endl;
-    }
-              
-    return days;
-}
 
-//function for departure time
-int getTime (double& departureTime, double& arrivalTime)
-{
-	cout << "(24 hour format )" << endl;
-    cout << "What time did you depart for the trip? (00.00 format) = " ;
-    cin >> departureTime;
-    cout <<endl;
-           
-    while ( departureTime <0 || departureTime > 23.59)
-    {
-    cout << "Error: Please enter a number between 00.00 and 23.59 = ";
-    cin >> departureTime;
-    cout << endl;
-    }
-          
-    cout << "What time did you arrive for the trip? (00.00 format) = " ;
-    cin >> arrivalTime;
-    cout << endl;
-           
-    while ( arrivalTime <0 || arrivalTime > 23.59)
-    {
-    cout << "Error: Please enter a number between 00.00 and 23.59 = ";
-    cin >> arrivalTime;
-    cout << endl;
-    }
-    
-}
+   calcTotalCost(daysOnTrip , timeOfDeparture , timeOfArrival , roundTripFares ,
+                 carRentalCost, parkingFees , taxiFees, registrationFees ,
+                 hotelExpenses , breakfastFirstDay, lunchFirstDay , dinnerFirstDay ,
+                 breakfastLastDay , lunchLastDay , dinnerLastDay ) ;
 
-// function for travel expanses fee
-double getAirfareAmount (double airfareFee)
-{        
-    cout << "What was the total cost of the air fare? = RM";
-    cin >> airfareFee;
-    cout << endl;
-         
-	while (airfareFee < 0)
-    {
-       cout << "Error! Please Enter More Than 0 = RM";
-       cin >> airfareFee;
-       cout << endl;
-    }
-         
-    return airfareFee;
-}
-
-// function for car rental
-double getCarRentalAmount (double carRentalFee)
-{
-    cout << "What was the total cost of any car rentals? = RM";
-    cin >> carRentalFee;
-    cout << endl;
-    
-    while (carRentalFee < 0)
-    {
-    cout << "Error! Try Again! = RM";
-    cin >> carRentalFee;
-    cout << endl;
-    }
-       
-    return carRentalFee;
-}
-
-//function taxi fare
-int getTaxiAmount (double &taxiSpent, double &allowedTaxiFee)
-{
-    double taxiFee;
-    int days;
-    cout << "How much was spent on taxi fare? = RM";
-    cin >> taxiFee; 
-    cout << endl;
-    
-    while (taxiFee < 0)
-    {
-        cout << "Try again! = RM";
-        cin >> taxiFee;
-        cout << endl;
-    }
-       
-    taxiSpent = days * taxiFee;
-    allowedTaxiFee = 6 * days;
-}
-
-// function conference
-double getRegistrationFee (double registrationFee)
-{
-    cout << "How much was spent on conference fees? = RM";
-    cin >> registrationFee;
-    cout << endl;
-       
-    while (registrationFee < 0)
-    {
-        cout << "Try again! = RM" ;
-        cin >> registrationFee;
-        cout << endl;
-    }
-       
-    return registrationFee;
-}       
-
-// function hotel fee
-int getHotelAmount (double &allowedHotelFee, double &hotelFeeTotal)
-{
-    int days;
-    double hotelFee;
-    cout << "How much was spent on hotel rooms? = RM";
-    cin >> hotelFee; 
-    cout << endl;
-       
-    while (hotelFee < 0)
-    {
-        cout << "Try again! = RM";
-        cin >> hotelFee;
-        cout << endl;
-    }
-    
-       
-	hotelFeeTotal= hotelFee * days;
-} 
-
-// function daily eat
-
-double getMealAmount(double spentMealTotal)
-{
-    int days;
-    int numDays;
-    double breakfast;
-    double lunch;
-    double dinner;
-    double firstDay;
-    double lastDay;
-    double departureTime;
-    double arrivalTime;
-    double breakfastFee;
-    double lunchFee;
-    double dinnerFee;
-    
-    for(int days = 1; days <= numDays; days++)
-        {         
-            cout << "Day:" << days <<  endl;
-            
-    if (days < 2 && departureTime > 00.00 && departureTime <= 7.00)
-        {
-            cout << "Enter the cost of breakfast: RM ";
-            cin >> breakfastFee;
-            cout << endl;
-            cout << "Enter the cost of lunch: RM ";
-            cin >> lunchFee;
-            cout << endl;
-            cout << "Enter the cost of dinner: RM ";
-            cin >> dinnerFee;
-            cout << endl;
-        }
-            
-    if (days < 2 && departureTime > 7.01 && departureTime <=12.00)
-        {
-            cout << "Enter the cost of lunch: RM ";
-            cin >> lunchFee;
-            cout << endl;
-            cout << "Enter the cost of dinner: RM ";
-            cin >> dinnerFee;
-            cout << endl;
-        }
-        
-    if (days < 2 && departureTime > 12.01 && departureTime <=18.00)
-        {
-            cout << "Enter the cost of dinner: RM ";
-            cin >> dinnerFee;
-            cout << endl;
-        }
-    if (days > 1 && days < numDays )
-       {    
-            cout << "Enter the cost of breakfast: RM ";
-            cin >> breakfastFee;
-            cout << endl;
-            cout << "Enter the cost of lunch: RM ";
-            cin >> lunchFee;
-            cout << endl;
-            cout << "Enter the cost of dinner: RM ";
-            cin >> dinnerFee;
-            cout << endl;
-       }
-    
-    if (days == numDays && arrivalTime > 8.00 && arrivalTime <= 13.00) 
-        {
-            cout << "Enter the cost of breakfast: ";
-            cin >> breakfastFee;
-            
-        }
-        
-    if (days == numDays && arrivalTime > 13.01 && arrivalTime <= 19.00)
-        {
-            cout << "Enter the cost of breakfast:RM ";
-            cin >> breakfastFee;
-            cout << endl;
-            cout << "Enter the cost of lunch: RM ";
-            cin >> lunchFee;  
-            cout << endl;
-        }
-        
-    if (days == numDays && arrivalTime > 19.01)
-        {
-            cout << "Enter the cost of breakfast: RM ";
-            cin >> breakfastFee;
-            cout << endl;
-            cout << "Enter the cost of lunch: RM ";
-            cin >> lunchFee;
-            cout << endl;
-            cout << "Enter the cost of dinner: RM ";
-            cin >> dinnerFee;
-            cout << endl;
-        }
-        cout <<endl;      
-}
   
-    spentMealTotal= breakfastFee +lunchFee +dinnerFee;  
+   return 0;
+}
+/*go and return */
+int numDays(int daysOnTrip)
+{
+   
+   cout << "How many days did you spend on this trip? : ";
+   cin >> daysOnTrip;
+   cout << endl;
+
+   while (daysOnTrip < 1)
+   {
+      cout << "\nInvalid input. The number of days spent on a trip\n"
+           << "has to be greater than or equal to 1.\n"
+           << "How many days have you spent on this trip? : ";
+      cin >> daysOnTrip;
+      cout << endl;
+   }
+
+   return daysOnTrip; 
+}
+
+double getDepartureTime(double departureTime)
+{
+   cout << "24 HOURS FORMAT" ;
+   cout << endl;
+   cout << "\nAt what time was your departure on the first day? : ";
+   cin >> departureTime;
+   cout << endl;
+   
+   while (departureTime < 0 || departureTime > 24.00)
+   {
+      cout << "\nInvalid input. The departure time can not be\n"
+           << "negative. Example Input: 00.00 - 24.00\n"
+           << "At what time was your departure on the first day? : ";
+      cin >> departureTime;
+      cout << endl;
+   }
+   
+   return departureTime;
+}
+
+
+
+double getArrivalTime(double arrivalTime)
+{
+   cout << "24 HOURS FORMAT" ;
+   cout << endl;
+   cout << "\nWhat Time Did You Arrive Back Home? : ";
+   cin >> arrivalTime;
+   cout << endl;
+
+   while (arrivalTime < 0 || arrivalTime > 24.00)
+   {
+      cout << "\nInvalid input. The arrival time can not be\n"
+           << "negative or greater than 24.00.\n"
+           << "At What Time Did You Arrive Back Home? ";
+      cin >> arrivalTime;
+      cout << endl;
+   }
+
+    
+   return arrivalTime;
+}
+
+
+
+double getRoundTripFares(double roundTripFares)
+{
+  
+   cout << "\nHow Much Round Trip AirFares ? : RM ";
+   cin >> roundTripFares;
+   cout << endl;
+
+   while (roundTripFares < 0)
+   {
+      cout << "\nInvalid input. The amount of airfares can not\n"
+           << "be negative.\n"
+           << "How Much Round Trip AirFares ? : RM";
+      cin >> roundTripFares;
+      cout << endl;
+   }
+
+   return roundTripFares;
+}
+
+double getCarRentalCost(double carRentalCost)
+{
+   
+   cout << "\nHow Much Car Rental Cost ? : RM ";
+   cin >> carRentalCost;
+   cout << endl;
+
+   while (carRentalCost < 0)
+   {
+      cout << "\nInvalid input. The amount of car rental cost can not\n"
+           << "be negative.\n"
+           << "\nHow Much Car Rental Cost ? : RM  ";
+      cin >> carRentalCost;
+      cout << endl;
+   }
+   return carRentalCost;
+}
+
+double getParkingFees (double parkingFees)
+{
+   cout << "\nHow Much You Need To Pay Parking Fees ? : RM ";
+   cin >> parkingFees;
+   cout << endl;
+
+   while (parkingFees < 0)
+   {
+      cout << "\nInvalid input. The parking fees can not be negative.\n\n"
+           << "How Much You Need To Pay Parking Fees ? : RM  ";
+      cin >> parkingFees;
+      cout << endl;
+   }
+   return parkingFees; 
+}
+
+double getTaxiFees (double taxiFees)
+{
+   cout << "\nHow Much You Need To Pay taxi ? : RM ";
+   cin >> taxiFees;
+   cout << endl;
+
+   /* Validate: Input */
+   while (taxiFees < 0)
+   {
+      cout << "\nInvalid input. The taxi fees can not be negative.\n\n"
+           << "How Much You Need To Pay taxi ? : RM ";
+      cin >> taxiFees;
+      cout << endl;
+   }
+   return taxiFees; 
+}
+
+double getRegistrationFees (double registrationFees)
+{
+   
+   cout << "\nHow Much A Conference Registration Fees ? : RM ";
+   cin >> registrationFees;
+   cout << endl;
+   
+   while (registrationFees < 0)
+   {
+      cout << "\nInvalid input. The registration fee can not be negative.\n"
+           << "How Much A Conference Registration Fees ? : RM";
+      cin >> registrationFees;
+      cout << endl;
+   }
+
+   return registrationFees; 
+}
+
+double getHotelExpenses(double hotelExpenses)
+{
+   
+   cout << "\nHow Much The Total Of Hotel Cost ? : RM ";
+   cin >> hotelExpenses;
+   cout << endl;
+
+   while (hotelExpenses < 0)
+   {
+      cout << "\nInvalid input. The hotel expenses can not be negative.\n"
+           << "How Much The Total Of Hotel Cost ? : RM";
+      cin >> hotelExpenses;
+      cout << endl;
+   }
+
+   return hotelExpenses;
+}
+
+double getAllowableMeals(double timeOfDeparture, double timeOfArrival, 
+                         double &breakfastFirstDay, double &lunchFirstDay,
+                         double &dinnerFirstDay, double &breakfastLastDay,
+                         double &lunchLastDay, double &dinnerLastDay)
+{
+   /*Amount for meal */
+   double amountAllowableMeals = 0.0;
+
+   /* Time */
+   if (timeOfDeparture > 07.00)
+   {
+      cout << "\nHow Much You Pay For Breakfast In First Day ? : RM ";
+      cin >> breakfastFirstDay;
+   }
+
+   while (breakfastFirstDay < 0.0)
+   {
+      cout << "\nInvalid input. The cost for breakfast can not be negative.\n"
+           << "How Much You Pay For Breakfast In First Day ? : RM ";
+      cin >> breakfastFirstDay;
+      cout << endl;
+   }
+
+   if (timeOfDeparture < 12.00)
+   {
+      cout << "\nHow Much You Pay For Lunch In First Day ? : RM ";
+      cin >> lunchFirstDay;
+      cout << endl;
+   }
+
+   while (lunchFirstDay < 0.0)
+   {
+      cout << "\nInvalid input. The cost for lunch can not be negative.\n"
+           << "How Much You Pay For Lunch In First Day ? : RM";
+      cin >> lunchFirstDay;
+      cout << endl;
+   }
+
+   if (timeOfDeparture < 18.00)
+   {
+      cout << "\nHow Much You Pay For Dinner In First Day ? : RM ";
+      cin >> dinnerFirstDay;
+      cout << endl;
+   }
+
+   while (dinnerFirstDay < 0.0)
+   {
+      cout << "\nInvalid input. The cost for dinner can not be negative.\n"
+           << "How Much You Pay For Dinner In First Day ? : RM ";
+      cin >> dinnerFirstDay;
+      cout << endl;
+   }
+   
+   /*last day */
+   if (timeOfArrival < 08.00)
+   {
+      cout << "\nHow Much You Pay For Breakfast In Last Day ? : RM ";
+      cin >> breakfastLastDay;
+      cout << endl;
+   }
+
+   while (breakfastLastDay < 0.0)
+   {
+      cout << "\nInvalid input. The cost for breakfast can not be negative.\n"
+           << "How Much You Pay For Breakfast In Last Day ? : RM ";
+      cin >> breakfastLastDay;
+      cout << endl;
+   }
+
+   if (timeOfArrival > 13.00)
+   {
+      cout << "\nHow Much You Pay For Lunch In Last Day ? : RM ";
+      cin >> lunchLastDay;
+      cout << endl;
+   }
+
+   /* Validate: Input */
+   while (lunchLastDay < 0.0)
+   {
+      cout << "\nInvalid input. The cost for lunch can not be negative.\n"
+           << "How Much You Pay For Lunch In Last Day ? : RM ";
+      cin >> lunchLastDay;
+      cout << endl;
+   }
+
+   if (timeOfArrival > 19.00)
+   {
+      cout << "\nHow Much You Pay For Dinner In Last Day ? : RM ";
+      cin >> dinnerLastDay;
+      cout << endl;
+   }
+
+   /* Validate: Input */
+   while (dinnerLastDay < 0.0)
+   {
+      cout << "\nInvalid input. The cost for breakfast can not be negative.\n"
+         << "How Much You Pay For Dinner In Last Day ? : RM ";
+      cin >> dinnerLastDay;
+      cout << endl;
+   }
+
+   return amountAllowableMeals;
+}
+
+/* for Total Cost */
+void calcTotalCost(int numDays, double timeDeparture, double timeArrival,
+                   double costAirFare, double costCarRental ,
+                   double costParking, double costTaxi, double costRegistration,
+                   double costHotel, double costBreakfastFirst, double costLunchFirst,
+                   double costDinnerFirst, double costBreakfastLast, double costLunchLast,
+                   double costDinnerLast , double costTaxiCovered,
+                   double costParkingCovered, double costHotelCovered,
+                   double costBreakfastCovered, double costLunchCovered,
+                   double costDinnerCovered)
+{
+   /* Variables: Cost not covered */
+   
+   double privateCostCar = 0.0,
+          privateCostHotel = 0.0,
+          privateCostTaxi = 0.0,
+          privateCostBreakfast = 0.0,
+          privateCostLunch = 0.0,
+          privateCostDinner = 0.0,
+          privateCostTotal = 0.0,
+          privateCostParking = 0.0,
+          costSubtotal = 0.0,
+          costTotal = 0.0;
+
+   /* Set up: Numeric output formatting */
+   cout << fixed << showpoint << setprecision(2);
+    
+	cout <<"***********"<<endl;
+    cout <<"*  TOTAL  *"<<endl;
+    cout <<"***********"<<endl; 
+    cout << endl;
+    cout << endl;
+    cout << "Travel Expenses For :" << name
+      << "Number of Days:\t\t"
+      << setw(26) << right << numDays
+      << setw(15) << right
+      << "\nTime of Departure:\t\t"
+      << setw(21) << right << timeDeparture
+      << setw(15) << right
+      << "\nTime of Arrival:\t\t"
+      << setw(21) << right << timeArrival
+      << setw(15) << right
+      << "\n\nCost of Air Fare:\t\t"
+      << setw(13) << right << "RM "
+      << setw(8) << right << costAirFare
+      << "\nCost of Car Rental:\t\t"
+      << setw(13) << right << "RM "
+      << setw(8) << right << costCarRental
+      << "\nCost of Taxi Fare:\t\t"
+      << setw(13) << right << "RM "
+      << setw(8) << right << costTaxi
+      << "\nCost of Parking Fare:\t\t"
+      << setw(13) << right << "RM"
+      << setw(8) << right << costParking
+      << "\nCost of Registration:\t\t"
+      << setw(13) << right << "RM"
+      << setw(8) << right << costRegistration
+      << "\nCost of Overnight Hotel stay:\t\t"
+      << setw(5) << right << "RM "
+      << setw(8) << right << costHotel
+      << "\nCost of Breakfast on First Day:\t\t"
+      << setw(5) << right << "RM"
+      << setw(8) << right << costBreakfastFirst
+      << "\nCost of Lunch on First Day:\t\t"
+      << setw(5) << right << "RM "
+      << setw(8) << right << costLunchFirst
+      << "\nCost of Dinner on First Day:\t\t"
+      << setw(5) << right << "RM "
+      << setw(8) << right << costDinnerFirst
+      << "\nCost of Breakfast on Last Day:\t\t"
+      << setw(5) << right << "RM "
+      << setw(8) << right << costBreakfastLast
+      << "\nCost of Lunch on Last Day:\t\t"
+      << setw(5) << right << "RM "
+      << setw(8) << right << costLunchLast
+      << "\nCost of Dinner on Last Day:\t\t"
+      << setw(5) << right << "RM "
+      << setw(8) << right << costDinnerLast;
+
+   /* Calculate: The sub-total cost of the trip */
+   costSubtotal = costAirFare + costCarRental + costTaxi + costRegistration + costParking +
+                  costHotel + costBreakfastFirst + costLunchFirst +
+                  costDinnerFirst + costDinnerLast + costBreakfastLast +
+                  costLunchLast + costDinnerLast;
+
+   /* Display: Sub-total */
+   cout << "\n\nSub-Total: "
+        << setw(34) << right << "RM "
+        << setw(8) << right << costSubtotal;
+  
+
+   /* Determine: How much the employee has to pay from his own pocket */
+   if (costHotel > costHotelCovered)
+   {
+      privateCostHotel = costHotel - costHotelCovered * numDays;
+   }
+
+   if (costTaxi > costTaxiCovered)
+   {
+      privateCostTaxi = costTaxi - costTaxiCovered * numDays;
+   }
+   
+   if (costParking > costParkingCovered)
+   {
+   	privateCostParking = costParking - costParkingCovered * numDays;
+   }
+
+   if ((costBreakfastFirst + costBreakfastLast) > costBreakfastCovered)
+   {
+      privateCostBreakfast = (costBreakfastFirst + costBreakfastLast) - costBreakfastCovered;
+   }
+
+   if ((costLunchFirst + costLunchLast) > costLunchCovered)
+   {
+      privateCostLunch = (costLunchFirst + costLunchLast) - costLunchCovered;
+   }
+
+   if ((costDinnerFirst + costDinnerLast) > costDinnerCovered)
+   {
+      privateCostDinner = (costDinnerFirst + costDinnerLast) - costDinnerCovered;
+   }
+
+   /* Calculate: the total private cost of the trip */
+      privateCostTotal = privateCostCar + privateCostHotel + privateCostTaxi + privateCostParking +
+                         privateCostBreakfast + privateCostLunch + privateCostDinner;
+
+      /* Display: The cost not covered by the company */
+      cout << "\n\nThe following expenses are not covered: \n\n"
+
+           << "\nParking :\t\t"
+           << setw(21) << right << "RM"
+           << setw(8) << right << privateCostParking
+           << "\nStay in Hotel:\t\t"
+           << setw(21) << right << "RM "
+           << setw(8) << right << privateCostHotel
+           << "\nTaxi fees:\t\t"
+           << setw(21) << right << "RM "
+           << setw(8) << right << privateCostTaxi
+           << "\nBreakfast:\t\t"
+           << setw(21) << right << "RM "
+           << setw(8) << right << privateCostBreakfast
+           << "\nLunch:\t\t"
+           << setw(29) << right << "RM "
+           << setw(8) << right << privateCostLunch
+           << "\nDinner:\t\t"
+           << setw(29) << right << "RM "
+           << setw(8) << right << privateCostDinner;
+
+      /* Calculate: The total cost of the trip */
+      costTotal = costSubtotal + privateCostTotal;
+      
+      cout << "\n\nThe total cost of company not covered is: RM" ;
+      cout << privateCostTotal ;
+      cout << endl;
+             
+
+      /* Display: The total cost of the trip */
+      cout << "\n\nThe total cost of this trip is:\t\t"
+           << setw(5) << right << "RM "
+           << setw(8) << right << costTotal;        
 }
