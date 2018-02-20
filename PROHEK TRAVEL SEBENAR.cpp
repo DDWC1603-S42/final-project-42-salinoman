@@ -1,7 +1,6 @@
 #include <utility>
 #include <iostream>
 #include <iomanip>
-#include <string>
 
 using namespace std;
 
@@ -485,17 +484,17 @@ void calcTotalCost(int numDays, double timeDeparture, double timeArrival,
    /* Determine: How much the employee has to pay from his own pocket */
    if (costHotel > costHotelCovered)
    {
-      privateCostHotel = costHotel - costHotelCovered * numDays;
+      privateCostHotel = (costHotel - costHotelCovered) * numDays;
    }
 
    if (costTaxi > costTaxiCovered)
    {
-      privateCostTaxi = costTaxi - costTaxiCovered * numDays;
+      privateCostTaxi = (costTaxi - costTaxiCovered) * numDays;
    }
    
    if (costParking > costParkingCovered)
    {
-   	privateCostParking = costParking - costParkingCovered * numDays;
+   	privateCostParking = (costParking - costParkingCovered) * numDays;
    }
 
    if ((costBreakfastFirst + costBreakfastLast) > costBreakfastCovered)
